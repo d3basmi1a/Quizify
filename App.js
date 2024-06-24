@@ -1,20 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Provider as PaperProvider } from 'react-native-paper';
+import HomeScreen from './screens/HomeScreen';
+import AddEditScreen from './screens/AddEditScreen';
+import DetailScreen from './screens/DetailScreen';
+import QuizTakingScreen from './screens/QuizTakingScreen';
 
-export default function App() {
+import { QuizProvider } from './context/QuizContext';
+
+const Stack = createStackNavigator();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <QuizProvider>
+      <PaperProvider>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Edit" component={AddEditScreen} />
+            <Stack.Screen name="Details" component={DetailScreen} />
+            <Stack.Screen name="Quiz" component={QuizTakingScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </QuizProvider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
